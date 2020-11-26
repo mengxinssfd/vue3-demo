@@ -16,36 +16,45 @@
   </ul>
 </template>
 
-<script lang="ts" setup="props,ctx">
-import { ref } from "vue";
+<script lang="ts">
+import { defineComponent, ref, PropType } from "vue";
 
-/*type option = { label: string; value: string };
-declare const props: {
+type option = { label: string; value: string };
+
+/*declare const props: {
   options: option[];
   label: keyof option;
   value: keyof option;
 }*/
-export default {
+
+export default defineComponent({
   props: {
-    options: Array,
+    options: {
+      type: Array as PropType<option[]>,
+      required: true
+    },
     label: {
-      type: String,
+      type: String as PropType<keyof option>,
       default: "label"
     },
     value: {
-      type: String,
+      type: String as PropType<keyof option>,
       default: "value"
     }
+  },
+  setup(props, ctx) {
+    const active = ref(0);
+    return {
+      active,
+      clickItem(index: number) {
+        active.value = index;
+        const item = props.options[index];
+        ctx.emit("update:selectedValue", item[props.value]);
+        ctx.emit("change", { index: index, ...item });
+      }
+    };
   }
-};
-export const active = ref(0);
-
-export function clickItem(index: number) {
-  active.value = index;
-  const item = props.options[index];
-  ctx.emit("update:selectedValue", item[props.value]);
-  ctx.emit("change", { index: index, ...item });
-}
+});
 </script>
 
 <style scoped lang="stylus">
@@ -61,12 +70,14 @@ export function clickItem(index: number) {
   box-sizing: border-box;
   background: #f2f4f7;
   border-radius: 4px;
+
   li {
     $w = 90px;
     width: $w;
     line-height: ($h - $p * 2);
     height: ($h - $p * 2);
     $t = 0.2s;
+
     &.item {
       position: relative;
       z-index: 1;
@@ -76,12 +87,14 @@ export function clickItem(index: number) {
       text-align: center;
       transition: color $t ease-out;
       cursor: pointer;
+
       &.active {
         color: white;
         cursor: default;
         pointer-events: none;
       }
     }
+
     &.active-background {
       position: absolute;
       z-index: 0;
