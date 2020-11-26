@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
     <New p1="hello world" :p2="{ a: 1, b: 2 }"></New>
+<!--    <div>active {{ active }}</div>-->
     <Setup v-model:value="re.value"></Setup>
     <Switch
       v-model:selectedValue="selectedDate"
@@ -17,7 +18,10 @@ import { defineComponent, reactive, watch, ref } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
+// import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
+import test, { testObj } from "@/utils/test";
+
 const dateOptions = [
   /*{
     label: '当前',
@@ -67,9 +71,12 @@ export default defineComponent({
       console.log(n, o);
     });
 
+    test(testObj.value);
+
     return {
       re,
       selectedDate,
+      // active,
       clickSearch() {
         console.log("search", selectedDate.value);
       }

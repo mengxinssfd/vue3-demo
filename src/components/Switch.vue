@@ -19,13 +19,25 @@
 <script lang="ts" setup="props,ctx">
 import { ref } from "vue";
 
-type option = { label: string; value: string }
+/*type option = { label: string; value: string };
 declare const props: {
   options: option[];
   label: keyof option;
   value: keyof option;
+}*/
+export default {
+  props: {
+    options: Array,
+    label: {
+      type: String,
+      default: "label"
+    },
+    value: {
+      type: String,
+      default: "value"
+    }
+  }
 };
-
 export const active = ref(0);
 
 export function clickItem(index: number) {
@@ -54,7 +66,7 @@ export function clickItem(index: number) {
     width: $w;
     line-height: ($h - $p * 2);
     height: ($h - $p * 2);
-    $t= 0.2s;
+    $t = 0.2s;
     &.item {
       position: relative;
       z-index: 1;
