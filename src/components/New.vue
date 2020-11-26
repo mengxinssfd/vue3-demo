@@ -1,6 +1,6 @@
 <template>
   <div class="new">
-    <div class="p2">p1:{{p1 }}</div>
+    <div class="p2">p1:{{ p1 }}</div>
     <div class="p1" @click="add">new:点击增加 {{ calc }}</div>
     <div class="p2">p2 a + b:{{ p2.a + p2.b }}</div>
   </div>
