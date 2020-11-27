@@ -3,13 +3,22 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
     <New p1="hello world" :p2="{ a: 1, b: 2 }"></New>
-<!--    <div>active {{ active }}</div>-->
+    <!--    <div>active {{ active }}</div>-->
     <Setup v-model:value="re.value"></Setup>
     <Switch
       v-model:selectedValue="selectedDate"
       :options="re.dateOptions"
       @change="clickSearch"
     ></Switch>
+    <Select v-model:value="re.selectValue">
+      <Option
+        v-for="(item, index) in re.dateOptions"
+        :key="index"
+        :value="item.value"
+      >
+        {{ item.label }}
+      </Option>
+    </Select>
   </div>
 </template>
 
@@ -21,6 +30,8 @@ import Setup from "@/components/Setup.vue";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
+import Select from "@/components/Select.vue";
+import Option from "@/components/Option.vue";
 
 const dateOptions = [
   /*{
@@ -58,11 +69,14 @@ export default defineComponent({
     HelloWorld,
     New,
     Setup,
-    Switch
+    Switch,
+    Select,
+    Option
   },
   setup() {
     const re = reactive({
       value: 100,
+      selectValue: "3",
       dateOptions
     });
     const selectedDate = ref(dateOptions[0].value);
