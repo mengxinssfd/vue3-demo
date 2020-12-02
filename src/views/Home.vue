@@ -92,8 +92,8 @@ export default defineComponent({
 
     test(testObj.value);
     setTimeout(() => {
-      ld.switch();
-    }, 1000);
+      ld.close();
+    }, 10000);
     return {
       re,
       selectedDate,

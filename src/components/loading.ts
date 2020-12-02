@@ -1,9 +1,9 @@
 // loading/index.js
-import Vue, {createApp} from 'vue'
+import {createApp, ComponentPublicInstance} from 'vue'
 import LoadingComponent from './loading.vue'
 
 
-let loading: boolean | undefined = undefined
+let loading: ComponentPublicInstance<typeof LoadingComponent> | undefined = undefined
 
 
 const Loading = (options = {}) => {
@@ -20,18 +20,23 @@ const Loading = (options = {}) => {
     ...options
   }
   // 通过构造函数初始化组件 相当于 new Vue()
-  const app: any = createApp(LoadingComponent)
-  const instance = app.mount(document.createElement('div'))
+  const app = createApp(LoadingComponent)
+  const el = document.createElement('div')
+  const instance = app.mount(el) as ComponentPublicInstance<typeof LoadingComponent>
   parent.appendChild(instance.$el)
   // 显示loading
   instance.$nextTick(() => {
-    console.log(app, instance)
+    console.log(app, instance.$el)
     instance.switch()
     // instance.close();
   })
   // 将组件实例赋值给loading
   loading = instance
-  return instance
+  return {
+    close() {
+      app.unmount(el)
+    }
+  }
 }
 
 export default Loading
