@@ -19,6 +19,7 @@
         {{ item.label }}
       </Option>
     </Select>
+    <TsxComponent></TsxComponent>
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
 import Select from "@/components/Select.vue";
 import Option from "@/components/Option.vue";
+import TsxComponent from '@/components/TsxComponent'
 
 const dateOptions = [
   /*{
@@ -72,7 +74,8 @@ export default defineComponent({
     Setup,
     Switch,
     Select,
-    Option
+    Option,
+    TsxComponent
   },
   setup() {
     const ld = Loading();
@@ -88,7 +91,9 @@ export default defineComponent({
     });
 
     test(testObj.value);
-    setTimeout(ld.switch, 1000);
+    setTimeout(() => {
+      ld.switch();
+    }, 1000);
     return {
       re,
       selectedDate,

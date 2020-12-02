@@ -23,6 +23,9 @@ export default defineComponent({
       visible,
       switch() {
         visible.value = !visible.value;
+      },
+      close() {
+        console.log("close");
       }
     };
   }

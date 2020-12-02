@@ -20,17 +20,14 @@ const Loading = (options = {}) => {
     ...options
   }
   // 通过构造函数初始化组件 相当于 new Vue()
-  const instance: any = createApp(LoadingComponent).mount(document.createElement('div'))
-  /*  new LoadingConstructor({
-      el: document.createElement('div'),
-      data: opts
-    })*/
-  // 将loading元素挂在到parent上面
+  const app: any = createApp(LoadingComponent)
+  const instance = app.mount(document.createElement('div'))
   parent.appendChild(instance.$el)
   // 显示loading
   instance.$nextTick(() => {
-    console.log(instance)
+    console.log(app, instance)
     instance.switch()
+    // instance.close();
   })
   // 将组件实例赋值给loading
   loading = instance
