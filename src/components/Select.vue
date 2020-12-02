@@ -1,5 +1,6 @@
 <template>
   <div class="select">
+    <input type="text" readonly :value="value" @change="clickOption" />
     <slot :active="value"></slot>
   </div>
 </template>

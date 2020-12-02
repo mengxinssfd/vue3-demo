@@ -27,6 +27,7 @@ import { defineComponent, reactive, watch, ref } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
+import Loading from "@/components/loading";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
@@ -74,6 +75,7 @@ export default defineComponent({
     Option
   },
   setup() {
+    const ld = Loading();
     const re = reactive({
       value: 100,
       selectValue: "3",
@@ -86,7 +88,7 @@ export default defineComponent({
     });
 
     test(testObj.value);
-
+    setTimeout(ld.switch, 1000);
     return {
       re,
       selectedDate,
