@@ -28,13 +28,13 @@ import { defineComponent, reactive, watch, ref } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
-import Loading from "@/components/loading";
+import Loading from "@/components-ts/Loading";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
 import Select from "@/components/Select.vue";
 import Option from "@/components/Option.vue";
-import TsxComponent from '@/components/TsxComponent'
+import TsxComponent from "@/components/TsxComponent";
 
 const dateOptions = [
   /*{
@@ -93,7 +93,9 @@ export default defineComponent({
     test(testObj.value);
     setTimeout(() => {
       ld.close();
-    }, 10000);
+      setTimeout(Loading, 300);
+      setTimeout(ld.close, 3000);
+    }, 1000);
     return {
       re,
       selectedDate,
