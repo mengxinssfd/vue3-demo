@@ -87,7 +87,7 @@ export default defineComponent({
     Loading
   },
   setup() {
-    const ld = loading();
+    const ld = loading("loading");
     const re = reactive({
       value: 100,
       selectValue: "3",
@@ -102,7 +102,7 @@ export default defineComponent({
     test(testObj.value);
     setTimeout(() => {
       ld.close();
-      setTimeout(loading, 300);
+      setTimeout(loading, 200);
       setTimeout(ld.close, 3000);
     }, 1000);
     return {

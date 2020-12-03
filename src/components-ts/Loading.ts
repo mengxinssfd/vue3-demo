@@ -1,32 +1,34 @@
 // loading/index.js
-import { createApp, ComponentPublicInstance, ref } from 'vue';
+import { createApp, ComponentPublicInstance, reactive } from "vue";
 import LoadingComponent from "@/components/Loading.vue";
 
 let loading: { close: () => void } | undefined = undefined;
 let closeTimer: number;
-const visible = ref(true);
+// fixme 使用reactive函数生成的object传递给组件不会响应
+const re = reactive({ value: true, msg: "" });
 
-export default function (msg?: string) {
-  visible.value = true;
+export default function(msg?: string) {
+  re.value = true;
+  re.msg = msg ?? re.msg;
   if (loading) {
     clearTimeout(closeTimer);
     return loading;
   }
   const parent = document.body;
-  const el = document.createElement('div');
+  const el = document.createElement("div");
 
-  const app = createApp(LoadingComponent, {value: visible, msg});
+  const app = createApp(LoadingComponent, re);
   const ins = app.mount(el) as ComponentPublicInstance<typeof LoadingComponent>;
 
   parent.appendChild(ins.$el);
 
-  return loading = {
+  return (loading = {
     close() {
-      visible.value = false;
+      re.value = false;
       closeTimer = setTimeout(() => {
         loading = undefined;
         app.unmount(el);
       }, 500);
     }
-  };
-};
+  });
+}

@@ -4,10 +4,12 @@
     <div v-show="visible" class="custom-loading-mask">
       <!--loading中间的图标-->
       <div class="custom-loading-spinner">
-        <i class="custom-spinner-icon"></i>
-        <!--loading上面显示的文字-->
-        <p class="custom-loading-text">{{ text }}</p>
+        <svg viewBox="25 25 50 50" class="circular">
+          <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
+        </svg>
       </div>
+      <!--loading下面显示的文字-->
+      <p class="custom-loading-text">{{ text }}</p>
     </div>
   </transition>
 </template>
@@ -24,30 +26,36 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const pr = toRefs(props);
-    const text = ref<string>(pr.msg?.value ?? "loading");
-    const visible = ref<boolean>(pr.value.value ?? false);
-
-    watch(pr.value, n => {
-      visible.value = n;
-    });
-
-    function setVisible(value: boolean) {
-      visible.value = value;
-      ctx.emit("update:value", value);
-    }
+    const text = ref(pr.msg?.value ?? "");
+    const visible = ref<boolean>(false);
+    watch(
+      pr.value,
+      n => {
+        console.log("cccccccccccccc");
+        visible.value = n;
+      },
+      { immediate: true }
+    );
 
     function setText(msg: string) {
       ctx.emit("update:msg", msg);
       text.value = msg;
     }
 
+    function setVisible(value: boolean) {
+      visible.value = value;
+      ctx.emit("update:value", value);
+    }
+
     return {
       text,
       visible,
-      show(msg?: string) {
+      setText(msg?: string) {
         if (typeof msg === "string") {
           setText(msg);
         }
+      },
+      show() {
         setVisible(true);
       },
       hide() {
@@ -89,11 +97,35 @@ body > .custom-loading-mask {
   transform: translate(-50%, -50%);
   color: white;
 
-  .custom-loading-text:after {
-    margin-left: 4px;
-    letter-spacing: 4px;
-    animation: 2s linear infinite running loading-end;
-    content: "...";
+  .circular {
+    height: 42px;
+    width: 42px;
+    animation: loading-rotate 2s linear infinite;
+
+    .path {
+      animation: loading-dash 1.5s ease-in-out infinite;
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: 0;
+      stroke-width: 2;
+      //stroke: #409eff;
+      stroke: white;
+      stroke-linecap: round;
+    }
+  }
+}
+
+@keyframes loading-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -40px;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -120px;
   }
 }
 
@@ -106,21 +138,9 @@ body > .custom-loading-mask {
   }
 }
 
-@keyframes loading-end {
-  0% {
-    content: "...";
-  }
-  25% {
-    content: "·..";
-  }
-  50% {
-    content: ".·.";
-  }
-  75% {
-    content: "..·";
-  }
+@keyframes loading-rotate {
   100% {
-    content: "...";
+    transform: rotate(1turn);
   }
 }
 </style>
