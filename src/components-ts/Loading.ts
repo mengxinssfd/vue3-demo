@@ -1,35 +1,32 @@
 // loading/index.js
-import { createApp, ComponentPublicInstance } from 'vue';
+import { createApp, ComponentPublicInstance, ref } from 'vue';
 import LoadingComponent from "@/components/Loading.vue";
 
 let loading: { close: () => void } | undefined = undefined;
-let instance: ComponentPublicInstance<typeof LoadingComponent> | undefined = undefined;
 let closeTimer: number;
-const Loading = (msg?: string) => {
-  if (loading && instance) {
+const visible = ref(true);
+
+export default function (msg?: string) {
+  visible.value = true;
+  if (loading) {
     clearTimeout(closeTimer);
-    instance.show(msg);
     return loading;
   }
   const parent = document.body;
   const el = document.createElement('div');
 
-  const app = createApp(LoadingComponent, {value: true, msg});
-
+  const app = createApp(LoadingComponent, {value: visible, msg});
   const ins = app.mount(el) as ComponentPublicInstance<typeof LoadingComponent>;
-  instance = ins;
+
   parent.appendChild(ins.$el);
 
   return loading = {
     close() {
-      ins.hide();
+      visible.value = false;
       closeTimer = setTimeout(() => {
         loading = undefined;
-        instance = undefined;
         app.unmount(el);
       }, 500);
     }
   };
 };
-
-export default Loading;

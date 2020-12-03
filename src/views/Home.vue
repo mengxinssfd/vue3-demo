@@ -19,7 +19,14 @@
         {{ item.label }}
       </Option>
     </Select>
-    <TsxComponent></TsxComponent>
+    <div
+      class="tsx-wrapper"
+      style="position: relative"
+      @click="loadingVisible = !loadingVisible"
+    >
+      <Loading :value="loadingVisible"></Loading>
+      <TsxComponent></TsxComponent>
+    </div>
   </div>
 </template>
 
@@ -28,7 +35,8 @@ import { defineComponent, reactive, watch, ref } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
-import Loading from "@/components-ts/Loading";
+import Loading from "@/components/Loading.vue";
+import loading from "@/components-ts/Loading";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
@@ -75,10 +83,11 @@ export default defineComponent({
     Switch,
     Select,
     Option,
-    TsxComponent
+    TsxComponent,
+    Loading
   },
   setup() {
-    const ld = Loading();
+    const ld = loading();
     const re = reactive({
       value: 100,
       selectValue: "3",
@@ -93,10 +102,11 @@ export default defineComponent({
     test(testObj.value);
     setTimeout(() => {
       ld.close();
-      setTimeout(Loading, 300);
+      setTimeout(loading, 300);
       setTimeout(ld.close, 3000);
     }, 1000);
     return {
+      loadingVisible: ref(true),
       re,
       selectedDate,
       // active,

@@ -12,28 +12,42 @@
   </transition>
 </template>
 <script lang="ts">
-import { defineComponent, ref, toRefs } from "vue";
+import { defineComponent, ref, toRefs, watch, PropType } from "vue";
 
 export default defineComponent({
   props: {
     msg: String,
-    value: Boolean
+    value: {
+      type: [Boolean, Object /*Proxy*/] as PropType<boolean>,
+      required: true
+    }
   },
   setup(props, ctx) {
     const pr = toRefs(props);
-    const text = ref(pr.msg?.value ?? "loading");
-    const visible = ref(pr.value.value);
+    const text = ref<string>(pr.msg?.value ?? "loading");
+    const visible = ref<boolean>(pr.value.value ?? false);
+
+    watch(pr.value, n => {
+      visible.value = n;
+    });
 
     function setVisible(value: boolean) {
       visible.value = value;
       ctx.emit("update:value", value);
     }
 
+    function setText(msg: string) {
+      ctx.emit("update:msg", msg);
+      text.value = msg;
+    }
+
     return {
       text,
       visible,
       show(msg?: string) {
-        text.value = msg ?? text.value;
+        if (typeof msg === "string") {
+          setText(msg);
+        }
         setVisible(true);
       },
       hide() {
@@ -54,8 +68,12 @@ export default defineComponent({
   opacity: 0;
 }
 
-.custom-loading-mask {
+body > .custom-loading-mask {
   position: fixed;
+}
+
+.custom-loading-mask {
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
