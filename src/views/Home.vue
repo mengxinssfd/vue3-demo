@@ -27,6 +27,9 @@
       <Loading :value="loadingVisible"></Loading>
       <TsxComponent></TsxComponent>
     </div>
+    <Tooltip>
+      <button>tooltip</button>
+    </Tooltip>
   </div>
 </template>
 
@@ -43,6 +46,7 @@ import test, { testObj } from "@/utils/test";
 import Select from "@/components/Select.vue";
 import Option from "@/components/Option.vue";
 import TsxComponent from "@/components/TsxComponent";
+import Tooltip from "@/components/Tooltip.vue";
 
 const dateOptions = [
   /*{
@@ -84,7 +88,8 @@ export default defineComponent({
     Select,
     Option,
     TsxComponent,
-    Loading
+    Loading,
+    Tooltip
   },
   setup() {
     const ld = loading("loading");

@@ -1,6 +1,7 @@
 // loading/index.js
 import { createApp, ComponentPublicInstance, reactive, ref } from "vue";
 import LoadingComponent from "@/components/Loading.vue";
+import { createAppToBody } from "@/common/ts/createAppToBody";
 
 let loading: { close: () => void } | undefined = undefined;
 let closeTimer: number;
@@ -8,22 +9,15 @@ let closeTimer: number;
 // const re = reactive({value: true, msg: ""});
 const visible = ref(false);
 
-export default function (msg?: string) {
+export default function(msg?: string) {
   if (loading) {
     visible.value = true;
     clearTimeout(closeTimer);
     return loading;
   }
   visible.value = false;
-  const parent = document.body;
-  const el = document.createElement("div");
 
-  const app = createApp(LoadingComponent, {value: visible, msg});
-  const ins = app.mount(el) as ComponentPublicInstance<typeof LoadingComponent>;
-
-  parent.appendChild(ins.$el);
-
-  const a = 100_000_000
+  const { app, ins } = createAppToBody(LoadingComponent, { value: visible, msg });
 
   ins.$nextTick(() => {
     visible.value = true;
@@ -34,7 +28,7 @@ export default function (msg?: string) {
       visible.value = false;
       closeTimer = setTimeout(() => {
         loading = undefined;
-        app.unmount(el);
+        app.unmount(ins.$el);
       }, 500);
     }
   });
