@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <img alt="Vue logo" src="../assets/logo.png"/>
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
     <New p1="hello world" :p2="{ a: 1, b: 2 }"></New>
     <!--    <div>active {{ active }}</div>-->
     <Setup v-model:value="re.value"></Setup>
@@ -28,8 +28,19 @@
       <TsxComponent></TsxComponent>
     </div>
     <Tooltip>
-      <button>tooltip</button>
+      <input type="text"/>
     </Tooltip>
+    <Dialog :visible="true">
+      <template v-slot:header>
+        <h1>header</h1>
+      </template>
+      <div class="content">
+        content
+      </div>
+      <template v-slot:footer>
+        <div class="footer">footer</div>
+      </template>
+    </Dialog>
     <TestArrProp :arr="arr"></TestArrProp>
     <div @click="arr1Plus">click arr[1]++</div>
   </div>
@@ -43,6 +54,7 @@ import Setup from "@/components/Setup.vue";
 import Loading from "@/components/Loading.vue";
 import loading from "@/components-ts/Loading";
 import TestArrProp from "@/components/TestArrProp.vue";
+// import loading from "@/components-ts/Loading";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
@@ -50,6 +62,7 @@ import Select from "@/components/Select.vue";
 import Option from "@/components/Option.vue";
 import TsxComponent from "@/components/TsxComponent";
 import Tooltip from "@/components/Tooltip.vue";
+import Dialog from "@/components/Dialog.vue";
 
 const dateOptions = [
   /*{
@@ -93,10 +106,12 @@ export default defineComponent({
     TsxComponent,
     Loading,
     Tooltip,
+    Dialog,
+    Tooltip,
     TestArrProp
   },
   setup() {
-    const ld = loading("loading");
+    // const ld = loading("loading");
     const re = reactive({
       value: 100,
       selectValue: "3",
@@ -104,16 +119,16 @@ export default defineComponent({
     });
     const selectedDate = ref(dateOptions[0].value);
 
-    watch(selectedDate, function(n, o) {
+    watch(selectedDate, function (n, o) {
       console.log(n, o);
     });
 
     test(testObj.value);
     const arr = reactive([{ test: 1 }]);
     setTimeout(() => {
-      ld.close();
-      setTimeout(loading, 200);
-      setTimeout(ld.close, 3000);
+      // ld.close();
+      // setTimeout(loading, 200);
+      // setTimeout(ld.close, 3000);
     }, 1000);
     return {
       loadingVisible: ref(true),
