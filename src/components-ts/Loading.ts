@@ -1,5 +1,5 @@
 // loading/index.js
-import { createApp, ComponentPublicInstance, reactive, ref } from "vue";
+import { ref } from "vue";
 import LoadingComponent from "@/components/Loading.vue";
 import { createAppToBody } from "@/common/ts/createAppToBody";
 
@@ -17,7 +17,10 @@ export default function(msg?: string) {
   }
   visible.value = false;
 
-  const { app, ins } = createAppToBody(LoadingComponent, { value: visible, msg });
+  const { app, ins } = createAppToBody(LoadingComponent, {
+    value: visible,
+    msg
+  });
 
   ins.$nextTick(() => {
     visible.value = true;

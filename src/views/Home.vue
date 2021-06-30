@@ -30,6 +30,8 @@
     <Tooltip>
       <button>tooltip</button>
     </Tooltip>
+    <TestArrProp :arr="arr"></TestArrProp>
+    <div @click="arr1Plus">click arr[1]++</div>
   </div>
 </template>
 
@@ -40,6 +42,7 @@ import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
 import Loading from "@/components/Loading.vue";
 import loading from "@/components-ts/Loading";
+import TestArrProp from "@/components/TestArrProp.vue";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
 import test, { testObj } from "@/utils/test";
@@ -89,7 +92,8 @@ export default defineComponent({
     Option,
     TsxComponent,
     Loading,
-    Tooltip
+    Tooltip,
+    TestArrProp
   },
   setup() {
     const ld = loading("loading");
@@ -105,6 +109,7 @@ export default defineComponent({
     });
 
     test(testObj.value);
+    const arr = reactive([{ test: 1 }]);
     setTimeout(() => {
       ld.close();
       setTimeout(loading, 200);
@@ -117,6 +122,12 @@ export default defineComponent({
       // active,
       clickSearch() {
         console.log("search", selectedDate.value);
+      },
+      arr,
+      arr1Plus() {
+        const item = arr[0];
+        console.log(item);
+        item.test++;
       }
     };
   }
