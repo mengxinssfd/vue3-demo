@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png"/>
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
     <New p1="hello world" :p2="{ a: 1, b: 2 }"></New>
     <!--    <div>active {{ active }}</div>-->
     <Setup v-model:value="re.value"></Setup>
@@ -28,7 +28,7 @@
       <TsxComponent></TsxComponent>
     </div>
     <Tooltip>
-      <input type="text"/>
+      <input type="text" />
     </Tooltip>
     <Dialog :visible="true">
       <template v-slot:header>
@@ -52,7 +52,7 @@ import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
 import Loading from "@/components/Loading.vue";
-import loading from "@/components-ts/Loading";
+// import loading from "@/components-ts/Loading";
 import TestArrProp from "@/components/TestArrProp.vue";
 // import loading from "@/components-ts/Loading";
 // import Switch, { active } from "@/components/Switch.vue";
@@ -107,7 +107,6 @@ export default defineComponent({
     Loading,
     Tooltip,
     Dialog,
-    Tooltip,
     TestArrProp
   },
   setup() {
@@ -119,7 +118,7 @@ export default defineComponent({
     });
     const selectedDate = ref(dateOptions[0].value);
 
-    watch(selectedDate, function (n, o) {
+    watch(selectedDate, function(n, o) {
       console.log(n, o);
     });
 

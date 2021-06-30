@@ -23,13 +23,14 @@ export default defineComponent({
       default: TriggerType.hover
     }
   },
-  setup(props, ctx) {
+  setup() {
     return {
       onMouseenter() {
         console.log("mouse enter");
       }
     };
   },
+  // eslint-disable-next-line
   render(this: any) {
     const { $slots } = this;
     const showContent = () => {
@@ -39,7 +40,7 @@ export default defineComponent({
       if (type !== this.trigger) return;
       showContent();
     };
-    const onMouseEnter = (e: Event) => {
+    const onMouseEnter = () => {
       trigger(TriggerType.hover);
     };
     const onClick = () => {

@@ -32,7 +32,7 @@ export default defineComponent({
     }
   },
   computed: {},
-  setup(props) {
+  setup() {
     return {};
   }
 });
