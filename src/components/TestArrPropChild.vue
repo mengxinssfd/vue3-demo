@@ -8,7 +8,7 @@
 import { watch } from "vue";
 
 declare const props: {
-  arr: { test: number }[];
+  arr: { list: { test: number }[] };
 };
 watch(props.arr, n => {
   console.log(n);

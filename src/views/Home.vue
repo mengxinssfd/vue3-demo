@@ -53,7 +53,7 @@ import New from "@/components/New.vue";
 import Setup from "@/components/Setup.vue";
 import Loading from "@/components/Loading.vue";
 // import loading from "@/components-ts/Loading";
-import TestArrProp from "@/components/TestArrProp.vue";
+import TestArrProp from "@/components/TestArrPropChild.vue";
 // import loading from "@/components-ts/Loading";
 // import Switch, { active } from "@/components/Switch.vue";
 import Switch from "@/components/Switch.vue";
@@ -137,7 +137,7 @@ export default defineComponent({
       clickSearch() {
         console.log("search", selectedDate.value);
       },
-      arr,
+      arr: arr,
       arr1Plus() {
         const item = arr[0];
         console.log(item);
